@@ -621,137 +621,6 @@
     justify-content:center;
   }
 
-  /* ---------- Contatti ---------- */
-  .contatti{
-    background:var(--white);
-    position:relative;
-    overflow:hidden;
-  }
-  .contatti::before{
-    content:"";
-    position:absolute; inset:0;
-    background-image:url("sfondo contatti.jpeg");
-    background-repeat:repeat;
-    background-size:170px auto;
-    background-blend-mode:multiply;
-    opacity:0.16;
-    pointer-events:none;
-    z-index:0;
-  }
-  .contatti .wrap{ position:relative; z-index:1; }
-
-  .contatti-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:28px;
-    max-width:640px;
-    margin:0 auto 56px;
-  }
-  .contatti-card{
-    background:var(--cream);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:34px 28px;
-    text-align:center;
-  }
-  .contatti-nome{
-    font-size:1.6rem;
-    color:var(--mauve);
-    margin-bottom:18px;
-  }
-  .contatti-riga{
-    font-size:0.98rem;
-    color:#544963;
-    margin:0 0 14px;
-  }
-  .contatti-riga:last-child{ margin-bottom:0; }
-  .contatti-lbl{
-    display:block;
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:0.85rem;
-    color:var(--mauve);
-    margin-bottom:3px;
-  }
-  .contatti-riga a{
-    color:inherit;
-    text-decoration:none;
-    border-bottom:1px solid var(--gold);
-    padding-bottom:1px;
-    transition:opacity 0.2s ease;
-  }
-  .contatti-riga a:hover{ opacity:0.7; }
-
-  @media (max-width:600px){
-    .contatti-grid{ grid-template-columns:1fr; max-width:360px; }
-  }
-
-  .contatti-messaggio{
-    max-width:520px;
-    margin:0 auto;
-    text-align:center;
-  }
-  .contatti-poesia{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:1.25rem;
-    color:var(--ink);
-    line-height:1.65;
-    margin:0 0 26px;
-  }
-
-  .iban-box{
-    background:var(--cream);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:22px 24px;
-    margin:0 0 32px;
-  }
-  .iban-riga{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
-  }
-  .iban-lbl{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    color:var(--mauve);
-    font-size:0.92rem;
-  }
-  .iban-val{
-    font-size:0.98rem;
-    letter-spacing:0.04em;
-    color:var(--ink);
-  }
-  .iban-copy{
-    background:none;
-    border:1px solid var(--gold);
-    color:var(--mauve-2);
-    border-radius:20px;
-    padding:4px 14px;
-    font-family:'Jost', sans-serif;
-    font-size:0.8rem;
-    cursor:pointer;
-    transition:background 0.2s ease, color 0.2s ease;
-  }
-  .iban-copy:hover{ background:var(--gold); color:var(--white); }
-  .iban-copy.copied{ background:var(--lilac-deep); border-color:var(--lilac-deep); color:var(--white); }
-  .iban-intestatario{
-    margin:12px 0 0;
-    font-size:0.85rem;
-    color:#8a7f92;
-  }
-
-  .contatti-motto{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:1.15rem;
-    color:var(--mauve);
-    margin:0;
-  }
-
   /* ---------- RSVP ---------- */
   .rsvp{ background:var(--cream); }
   .rsvp-card{
@@ -884,7 +753,6 @@
       <li><a href="#tappe">Tappe</a></li>
       <li><a href="#programma">Programma</a></li>
       <li><a href="#galleria">Galleria</a></li>
-      <li><a href="#contatti">Contatti</a></li>
       <li><a href="#rsvp">RSVP</a></li>
     </ul>
   </nav>
@@ -1029,44 +897,6 @@
         <div class="carousel-dots" id="carouselDots"></div>
       </div>
       <p class="gallery-note">Scorri con le frecce, trascina o tocca i pallini per rivivere i nostri momenti. Tocca una foto per ingrandirla.</p>
-    </div>
-  </section>
-
-  <section class="contatti" id="contatti">
-    <div class="wrap">
-      <div class="section-head center">
-        <p class="section-label"><svg class="mini-flower"><use href="#botanical-blossom"></use></svg>Dove trovarci</p>
-        <h2 class="section-title">I nostri <em>contatti</em></h2>
-      </div>
-
-      <div class="contatti-grid">
-        <div class="contatti-card">
-          <h3 class="contatti-nome">Mirko</h3>
-          <p class="contatti-riga"><span class="contatti-lbl">Indirizzo</span>Via Finizia 95</p>
-          <p class="contatti-riga"><span class="contatti-lbl">Telefono</span><a href="tel:+393457154020">345 715 4020</a></p>
-        </div>
-        <div class="contatti-card">
-          <h3 class="contatti-nome">Miriana</h3>
-          <p class="contatti-riga"><span class="contatti-lbl">Indirizzo</span>Via Villa Frisari 16/b</p>
-          <p class="contatti-riga"><span class="contatti-lbl">Telefono</span><a href="tel:+393933964288">393 396 4288</a></p>
-        </div>
-      </div>
-
-      <div class="contatti-messaggio">
-        <p class="contatti-poesia">Abbiamo una casa da riempire di ricordi,<br>un mondo ancora da scoprire<br>e una vita intera da vivere insieme.</p>
-        <p class="contatti-poesia">Se vorrete contribuire al nostro prossimo capitolo,<br>porteremo con noi un pezzetto di voi. 🤍</p>
-
-        <div class="iban-box">
-          <div class="iban-riga">
-            <span class="iban-lbl">IBAN</span>
-            <span class="iban-val" id="ibanValue">IT79M0306941362100000061953</span>
-            <button class="iban-copy" id="ibanCopy" type="button">Copia</button>
-          </div>
-          <p class="iban-intestatario">Intestato a: Miriana Di Pinto</p>
-        </div>
-
-        <p class="contatti-motto">Da sempre, verso il per sempre.</p>
-      </div>
     </div>
   </section>
 
@@ -1259,24 +1089,6 @@
     render();
     startAutoplay();
   })();
-
-  const ibanCopy = document.getElementById('ibanCopy');
-  if (ibanCopy){
-    const ibanValue = document.getElementById('ibanValue');
-    ibanCopy.addEventListener('click', () => {
-      const text = ibanValue.textContent.replace(/\s+/g, '');
-      const done = () => {
-        ibanCopy.textContent = 'Copiato!';
-        ibanCopy.classList.add('copied');
-        setTimeout(() => { ibanCopy.textContent = 'Copia'; ibanCopy.classList.remove('copied'); }, 2000);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done).catch(done);
-      } else {
-        done();
-      }
-    });
-  }
 
   const rsvpForm = document.getElementById('rsvpForm');
   const rsvpThanks = document.getElementById('rsvpThanks');
