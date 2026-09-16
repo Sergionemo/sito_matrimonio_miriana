@@ -282,20 +282,16 @@
   /* ---------- Fascia fotografica ---------- */
   .photo-strip{ padding:100px 0; background:var(--cream); }
   .real-photo-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:70px;
-    align-items:center;
+    display:flex;
+    justify-content:center;
   }
   .real-photo{
     width:100%;
+    max-width:560px;
     height:auto;
     display:block;
     -webkit-mask-image:radial-gradient(ellipse 68% 68% at center, black 58%, transparent 92%);
     mask-image:radial-gradient(ellipse 68% 68% at center, black 58%, transparent 92%);
-  }
-  @media (max-width:720px){
-    .real-photo-grid{ grid-template-columns:1fr; gap:50px; }
   }
 
   .storia{ background:var(--white); }
@@ -352,16 +348,45 @@
   .play-badge{
     position:absolute;
     right:-4px; bottom:-4px;
-    width:24px; height:24px;
+    width:28px; height:28px;
     border-radius:50%;
     background:var(--mauve);
     color:var(--cream);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:0.65rem;
+    font-size:0.7rem;
     padding-left:2px;
     box-shadow:0 0 0 2px var(--cream);
+    animation:pulseBadge 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseBadge{
+    0%, 100%{ box-shadow:0 0 0 2px var(--cream), 0 0 0 0 rgba(110,90,120,0.45); }
+    50%{ box-shadow:0 0 0 2px var(--cream), 0 0 0 9px rgba(110,90,120,0); }
+  }
+  .timeline-video-hint{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:8px;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:0.92rem;
+    color:var(--mauve);
+    cursor:pointer;
+  }
+  .timeline-video-hint:hover{ opacity:0.75; }
+  .timeline-video-hint .tri{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:17px; height:17px;
+    border-radius:50%;
+    background:var(--mauve);
+    color:var(--cream);
+    font-size:0.55rem;
+    padding-left:1px;
+    flex:none;
   }
   .video-lightbox{
     position:fixed; inset:0;
@@ -621,6 +646,137 @@
     justify-content:center;
   }
 
+  /* ---------- Contatti ---------- */
+  .contatti{
+    background:var(--white);
+    position:relative;
+    overflow:hidden;
+  }
+  .contatti::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:url("sfondo contatti.jpeg");
+    background-repeat:repeat;
+    background-size:170px auto;
+    background-blend-mode:multiply;
+    opacity:0.16;
+    pointer-events:none;
+    z-index:0;
+  }
+  .contatti .wrap{ position:relative; z-index:1; }
+
+  .contatti-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+    max-width:640px;
+    margin:0 auto 56px;
+  }
+  .contatti-card{
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:34px 28px;
+    text-align:center;
+  }
+  .contatti-nome{
+    font-size:1.6rem;
+    color:var(--mauve);
+    margin-bottom:18px;
+  }
+  .contatti-riga{
+    font-size:0.98rem;
+    color:#544963;
+    margin:0 0 14px;
+  }
+  .contatti-riga:last-child{ margin-bottom:0; }
+  .contatti-lbl{
+    display:block;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:0.85rem;
+    color:var(--mauve);
+    margin-bottom:3px;
+  }
+  .contatti-riga a{
+    color:inherit;
+    text-decoration:none;
+    border-bottom:1px solid var(--gold);
+    padding-bottom:1px;
+    transition:opacity 0.2s ease;
+  }
+  .contatti-riga a:hover{ opacity:0.7; }
+
+  @media (max-width:600px){
+    .contatti-grid{ grid-template-columns:1fr; max-width:360px; }
+  }
+
+  .contatti-messaggio{
+    max-width:520px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .contatti-poesia{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.25rem;
+    color:var(--ink);
+    line-height:1.65;
+    margin:0 0 26px;
+  }
+
+  .iban-box{
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:22px 24px;
+    margin:0 0 32px;
+  }
+  .iban-riga{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .iban-lbl{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    color:var(--mauve);
+    font-size:0.92rem;
+  }
+  .iban-val{
+    font-size:0.98rem;
+    letter-spacing:0.04em;
+    color:var(--ink);
+  }
+  .iban-copy{
+    background:none;
+    border:1px solid var(--gold);
+    color:var(--mauve-2);
+    border-radius:20px;
+    padding:4px 14px;
+    font-family:'Jost', sans-serif;
+    font-size:0.8rem;
+    cursor:pointer;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .iban-copy:hover{ background:var(--gold); color:var(--white); }
+  .iban-copy.copied{ background:var(--lilac-deep); border-color:var(--lilac-deep); color:var(--white); }
+  .iban-intestatario{
+    margin:12px 0 0;
+    font-size:0.85rem;
+    color:#8a7f92;
+  }
+
+  .contatti-motto{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.15rem;
+    color:var(--mauve);
+    margin:0;
+  }
+
   /* ---------- RSVP ---------- */
   .rsvp{ background:var(--cream); }
   .rsvp-card{
@@ -753,6 +909,7 @@
       <li><a href="#tappe">Tappe</a></li>
       <li><a href="#programma">Programma</a></li>
       <li><a href="#galleria">Galleria</a></li>
+      <li><a href="#contatti">Contatti</a></li>
       <li><a href="#rsvp">RSVP</a></li>
     </ul>
   </nav>
@@ -775,7 +932,6 @@
     <div class="wrap">
       <div class="real-photo-grid">
         <img class="real-photo" src="foto-giardino.jpeg" alt="Mirko e Miriana a una festa in giardino">
-        <img class="real-photo" src="WhatsApp Image 2026-09-13 at 12.07.46.jpeg" alt="Mirko e Miriana, il momento della proposta">
       </div>
     </div>
   </section>
@@ -805,10 +961,10 @@
       </div>
       <ol class="timeline">
         <li><span class="timeline-photo" style="--tone-a:#F4CDDA; --tone-b:#DCC9EF;"></span><span class="year">1995</span><span class="desc">Ci conosciamo da bambini, cresciuti vicini tra giochi e piccoli momenti.</span></li>
-        <li><span class="timeline-photo" style="--tone-a:#DCC9EF; --tone-b:#C3E4EF;"></span><span class="year">2019</span><span class="desc">Inizia la nostra storia.</span></li>
-        <li><span class="timeline-photo" style="--tone-a:#C3E4EF; --tone-b:#F4CDDA;"></span><span class="year">2022</span><span class="desc">Iniziamo a convivere.</span></li>
-        <li><span class="timeline-photo timeline-photo--real" id="proposalPhotoTrigger" tabindex="0" role="button" aria-label="Guarda il video della proposta"><img src="WhatsApp Image 2026-09-13 at 12.07.46.jpeg" alt="Il momento della proposta"><span class="play-badge">&#9658;</span></span><span class="year">2025</span><span class="desc">La proposta.</span></li>
-        <li><span class="timeline-photo" style="--tone-a:#B695D6; --tone-b:#F4CDDA;"></span><span class="year">2026</span><span class="desc">La nostra casa.</span></li>
+        <li><span class="timeline-photo timeline-photo--real timeline-photo-zoom" tabindex="0" role="button" aria-label="Ingrandisci la foto del 2019"><img src="2019.jpeg" alt="Mirko e Miriana, 2019"></span><span class="year">2019</span><span class="desc">Inizia la nostra storia.</span></li>
+        <li><span class="timeline-photo timeline-photo--real timeline-photo-zoom" tabindex="0" role="button" aria-label="Ingrandisci la foto del 2022"><img src="2022.jpeg" alt="Mirko e Miriana, 2022"></span><span class="year">2022</span><span class="desc">Iniziamo a convivere.</span></li>
+        <li><span class="timeline-photo timeline-photo--real" id="proposalPhotoTrigger" tabindex="0" role="button" aria-label="Guarda il video della proposta"><img src="WhatsApp Image 2026-09-13 at 12.07.46.jpeg" alt="Il momento della proposta"><span class="play-badge">&#9658;</span></span><span class="year">2025</span><span class="desc">La proposta.<br><span class="timeline-video-hint" id="proposalHint" tabindex="0" role="button" aria-label="Guarda il video della proposta"><span class="tri">&#9658;</span>Guarda il video</span></span></li>
+        <li><span class="timeline-photo timeline-photo--real timeline-photo-zoom" tabindex="0" role="button" aria-label="Ingrandisci la foto del 2026"><img src="2026.jpeg" alt="Mirko e Miriana, 2026"></span><span class="year">2026</span><span class="desc">La nostra casa.</span></li>
         <li><span class="timeline-photo" style="--tone-a:#93C6DA; --tone-b:#DCC9EF;"></span><span class="year">2027</span><span class="desc">Il matrimonio.</span></li>
       </ol>
     </div>
@@ -866,7 +1022,6 @@
           <div class="carousel-track" id="carouselTrack">
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.03.46.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.03.46aa.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
-            <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.07.46.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.17.32.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.17.46.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.19.50.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
@@ -882,21 +1037,56 @@
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.26.58.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.27.26.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.28.38.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
-            <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.28.57.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.31.47.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.32.08.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
-            <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.32.08hhh.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.33.07.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
             <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.33.16.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
-            <div class="carousel-slide"><img src="WhatsApp Image 2026-09-13 at 12.36.47.jpeg" alt="Un ricordo di Mirko e Miriana" loading="lazy"></div>
           </div>
           <button class="carousel-arrow prev" id="carouselPrev" aria-label="Foto precedente">&#8249;</button>
           <button class="carousel-arrow next" id="carouselNext" aria-label="Foto successiva">&#8250;</button>
-          <span class="carousel-counter" id="carouselCounter">1 / 25</span>
+          <span class="carousel-counter" id="carouselCounter">1 / 21</span>
         </div>
         <div class="carousel-dots" id="carouselDots"></div>
       </div>
       <p class="gallery-note">Scorri con le frecce, trascina o tocca i pallini per rivivere i nostri momenti. Tocca una foto per ingrandirla.</p>
+    </div>
+  </section>
+
+  <section class="contatti" id="contatti">
+    <div class="wrap">
+      <div class="section-head center">
+        <p class="section-label"><svg class="mini-flower"><use href="#botanical-blossom"></use></svg>Dove trovarci</p>
+        <h2 class="section-title">I nostri <em>contatti</em></h2>
+      </div>
+
+      <div class="contatti-grid">
+        <div class="contatti-card">
+          <h3 class="contatti-nome">Mirko</h3>
+          <p class="contatti-riga"><span class="contatti-lbl">Indirizzo</span>Via Finizia 95</p>
+          <p class="contatti-riga"><span class="contatti-lbl">Telefono</span><a href="tel:+393457154020">345 715 4020</a></p>
+        </div>
+        <div class="contatti-card">
+          <h3 class="contatti-nome">Miriana</h3>
+          <p class="contatti-riga"><span class="contatti-lbl">Indirizzo</span>Via Villa Frisari 16/b</p>
+          <p class="contatti-riga"><span class="contatti-lbl">Telefono</span><a href="tel:+393933964288">393 396 4288</a></p>
+        </div>
+      </div>
+
+      <div class="contatti-messaggio">
+        <p class="contatti-poesia">Abbiamo una casa da riempire di ricordi,<br>un mondo ancora da scoprire<br>e una vita intera da vivere insieme.</p>
+        <p class="contatti-poesia">Se vorrete contribuire al nostro prossimo capitolo,<br>porteremo con noi un pezzetto di voi. 🤍</p>
+
+        <div class="iban-box">
+          <div class="iban-riga">
+            <span class="iban-lbl">IBAN</span>
+            <span class="iban-val" id="ibanValue">IT79M0306941362100000061953</span>
+            <button class="iban-copy" id="ibanCopy" type="button">Copia</button>
+          </div>
+          <p class="iban-intestatario">Intestato a: Miriana Di Pinto</p>
+        </div>
+
+        <p class="contatti-motto">Da sempre, verso il per sempre.</p>
+      </div>
     </div>
   </section>
 
@@ -1014,6 +1204,13 @@
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
 
+  document.querySelectorAll('.timeline-photo-zoom').forEach(el => {
+    const img = el.querySelector('img');
+    const openZoom = () => openLightbox(img.src, img.alt);
+    el.addEventListener('click', openZoom);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openZoom(); } });
+  });
+
   /* ---------- Galleria: carosello ---------- */
   (function(){
     const track = document.getElementById('carouselTrack');
@@ -1090,6 +1287,24 @@
     startAutoplay();
   })();
 
+  const ibanCopy = document.getElementById('ibanCopy');
+  if (ibanCopy){
+    const ibanValue = document.getElementById('ibanValue');
+    ibanCopy.addEventListener('click', () => {
+      const text = ibanValue.textContent.replace(/\s+/g, '');
+      const done = () => {
+        ibanCopy.textContent = 'Copiato!';
+        ibanCopy.classList.add('copied');
+        setTimeout(() => { ibanCopy.textContent = 'Copia'; ibanCopy.classList.remove('copied'); }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(done);
+      } else {
+        done();
+      }
+    });
+  }
+
   const rsvpForm = document.getElementById('rsvpForm');
   const rsvpThanks = document.getElementById('rsvpThanks');
   rsvpForm.addEventListener('submit', e => {
@@ -1102,6 +1317,7 @@
   const proposalVideo = document.getElementById('proposalVideo');
   const videoLightboxClose = document.getElementById('videoLightboxClose');
   const proposalTrigger = document.getElementById('proposalPhotoTrigger');
+  const proposalHint = document.getElementById('proposalHint');
   let lastFocusedVideo = null;
 
   function openVideoLightbox(){
@@ -1119,6 +1335,10 @@
   if (proposalTrigger){
     proposalTrigger.addEventListener('click', openVideoLightbox);
     proposalTrigger.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openVideoLightbox(); } });
+  }
+  if (proposalHint){
+    proposalHint.addEventListener('click', openVideoLightbox);
+    proposalHint.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openVideoLightbox(); } });
   }
   videoLightboxClose.addEventListener('click', closeVideoLightbox);
   videoLightbox.addEventListener('click', e => { if (e.target === videoLightbox) closeVideoLightbox(); });
