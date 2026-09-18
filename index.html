@@ -836,6 +836,7 @@
     margin:0 0 14px;
   }
   .rsvp-guest input.invalid{ border-color:#c0546a; }
+  .field input.invalid{ border-color:#c0546a; }
 
   .rsvp-submit{
     width:100%;
@@ -1118,6 +1119,10 @@
       <div class="rsvp-card">
         <form id="rsvpForm">
           <div class="field">
+            <label for="famiglia">Nome famiglia</label>
+            <input type="text" id="famiglia" name="famiglia" required>
+          </div>
+          <div class="field">
             <label>Sarai presente?</label>
             <div class="radio-row">
               <label class="radio-opt"><input type="radio" name="presenza" value="si" id="presenzaSi" checked> Sì, con piacere</label>
@@ -1128,13 +1133,13 @@
           <div id="rsvpGuestsWrap">
             <div class="field">
               <label for="ospiti">Numero di ospiti (te incluso/a)</label>
-              <input type="number" id="ospiti" name="ospiti" min="1" max="6" value="1">
+              <input type="number" id="ospiti" name="ospiti" min="1" max="6" value="1" required>
             </div>
             <div id="rsvpGuestList" class="rsvp-guest-list"></div>
           </div>
 
           <div class="field">
-            <label for="messaggio">Un messaggio per gli sposi</label>
+            <label for="messaggio" id="messaggioLabel">Un messaggio per gli sposi</label>
             <textarea id="messaggio" name="messaggio" placeholder="Facoltativo"></textarea>
           </div>
           <button type="submit" class="rsvp-submit">Conferma la tua presenza</button>
@@ -1142,7 +1147,7 @@
 
         <div class="rsvp-thanks" id="rsvpThanks">
           <p class="display">Grazie!</p>
-          <p>Abbiamo ricevuto la tua risposta. Non vediamo l'ora di festeggiare con te.</p>
+          <p id="rsvpThanksText">Abbiamo ricevuto la tua risposta. Non vediamo l'ora di festeggiare con te.</p>
         </div>
       </div>
     </div>
@@ -1330,8 +1335,8 @@
     div.className = 'rsvp-guest';
     div.innerHTML =
       '<p class="rsvp-guest-title">Ospite ' + (i + 1) + '</p>' +
-      '<div class="field"><label>Nome e cognome</label><input type="text" class="rsvp-guest-nome"></div>' +
-      '<div class="field field-allergie"><label>Allergie o intolleranze</label><input type="text" class="rsvp-guest-allergie" placeholder="Facoltativo"></div>';
+      '<div class="field"><label>Nome e cognome</label><input type="text" class="rsvp-guest-nome" required></div>' +
+      '<div class="field field-allergie"><label>Allergie o intolleranze</label><input type="text" class="rsvp-guest-allergie" placeholder="Es. Nessuna"></div>';
     return div;
   }
 
@@ -1349,6 +1354,8 @@
   function aggiornaVisibilitaAllergie(){
     const presente = document.getElementById('presenzaSi').checked;
     rsvpGuestList.querySelectorAll('.field-allergie').forEach(f => { f.style.display = presente ? '' : 'none'; });
+    const messaggioLabel = document.getElementById('messaggioLabel');
+    messaggioLabel.textContent = presente ? 'Un messaggio per gli sposi' : 'Un pensiero per gli sposi, anche se non potrai esserci';
   }
 
   rsvpOspitiInput.addEventListener('input', aggiornaOspiti);
@@ -1359,22 +1366,32 @@
   rsvpForm.addEventListener('submit', e => {
     e.preventDefault();
 
+    const famigliaInput = document.getElementById('famiglia');
+    const famiglia = famigliaInput.value.trim();
+    let valido = true;
+    if (!famiglia){ valido = false; famigliaInput.classList.add('invalid'); }
+    else { famigliaInput.classList.remove('invalid'); }
+
     const presente = document.getElementById('presenzaSi').checked;
     const blocchi = Array.from(rsvpGuestList.querySelectorAll('.rsvp-guest'));
-    let valido = true;
     const ospiti = blocchi.map(g => {
       const nomeInput = g.querySelector('.rsvp-guest-nome');
+      const allergieInput = g.querySelector('.rsvp-guest-allergie');
       const nome = nomeInput.value.trim();
+      const allergie = allergieInput.value.trim();
       if (!nome){ valido = false; nomeInput.classList.add('invalid'); }
       else { nomeInput.classList.remove('invalid'); }
-      return { nome: nome, allergie: presente ? g.querySelector('.rsvp-guest-allergie').value.trim() : '' };
+      if (presente && !allergie){ valido = false; allergieInput.classList.add('invalid'); }
+      else { allergieInput.classList.remove('invalid'); }
+      return { nome: nome, allergie: presente ? allergie : '' };
     });
     if (!valido){
-      blocchi[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      (famiglia ? blocchi[0] : famigliaInput).scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
     const payload = {
+      famiglia: famiglia,
       presenza: presente ? 'Sì' : 'No',
       numeroOspiti: rsvpOspitiInput.value,
       ospiti: ospiti,
@@ -1389,6 +1406,10 @@
         body: JSON.stringify(payload)
       }).catch(() => {});
     }
+
+    document.getElementById('rsvpThanksText').textContent = presente
+      ? "Abbiamo ricevuto la tua risposta. Non vediamo l'ora di festeggiare con te."
+      : "Ci dispiace che non sarai con noi al nostro matrimonio. Grazie comunque per averci risposto.";
 
     rsvpForm.style.display = 'none';
     rsvpThanks.classList.add('show');
